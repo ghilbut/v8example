@@ -1,0 +1,48 @@
+#-*- coding:utf-8 -*-
+
+import os
+import subprocess
+import sys
+
+BASEDIR = Dir('.').abspath
+VERSION = 'googletest-release-1.8.0'
+
+
+
+################################################################
+##  set environment and get build options
+################################################################
+
+cpppath = [
+    os.path.join(BASEDIR, VERSION, 'googletest/include'),
+    os.path.join(BASEDIR, VERSION, 'googletest'),
+    os.path.join(BASEDIR, VERSION, 'googlemock/include'),
+    os.path.join(BASEDIR, VERSION, 'googlemock'),
+  ]
+
+env = Environment(CPPPATH=cpppath, CXXFLAGS='-std=c++14')
+
+target = os.path.join(BASEDIR, VERSION)
+if env.GetOption('clean'):
+  subprocess.call([ 'rm', '-rf', target ])
+else:
+  if not os.path.exists(target):
+    subprocess.call([ 'tar', '-xzf', target + '.tar.gz', '-C', BASEDIR ])
+
+  #if os.name == 'posix':
+  #  env.Append(LINKFLAGS=['-pthread'])
+
+
+
+################################################################
+##  build static library
+################################################################
+
+sources = [
+    os.path.join(BASEDIR, VERSION, 'googletest/src/gtest-all.cc'),
+    os.path.join(BASEDIR, VERSION, 'googlemock/src/gmock-all.cc'),
+  ]
+
+# build static library
+lib = env.StaticLibrary(target='gtest', source=sources)
+

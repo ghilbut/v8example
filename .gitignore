@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+
+
+# v8example
+.sconsign.dblite
+example
+libboost
+libgtest
+libv8
+unittest
