@@ -48,6 +48,7 @@ TEST_LIBS = [
 LIBPATH = [
     'libboost/boost_1_66_0/lib',
     'libv8/v8/out.gn/x64.release/obj',
+    'libv8/v8/out.gn/x64.release/obj/third_party/icu',
   ]
 
 TEST_LIBPATH = [
